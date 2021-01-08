@@ -69,8 +69,7 @@ def parseData(selection):
                 parsed_data.append(data)
 
         data_dict = dict(zip(parsed_text, parsed_data))
-        print(parsed_data)
-        print(data_dict)
+
         time_string = ""
     else:
         url = "https://cityofcambridge.shinyapps.io/COVID19/"
@@ -125,13 +124,14 @@ print()
 tweet1 = (f'''Here is the latest COVID-19 data from Cambridge, MA.
 {date_updated}
 New Cases Today: {data_dict["Newly Reported Cases Today*"]}
+Today's Deaths: {data_dict["Newly Reported Deaths Today*"]}
 Total Cases: {data_dict["Cumulative Cases"]}
 Total Deaths: {data_dict["Total Deaths"]}
+Active Cases: {data_dict["Active Cases"]}
 Total Recoveries: {data_dict["Total Recoveries"]}
 Positive Test Rate (last 14 days): {data_dict["Positive Tests*** Over the Last 14 Days"]}
-Cases per 100k (7 day moving average): {data_dict["Confirmed Cases per 100,000 residents** 7 Day Moving Average"]}
+Cases per 100k (7 day average): {data_dict["Confirmed Cases per 100,000 residents** 7 Day Moving Average"]}
 ''')
-# https://cityofcambridge.shinyapps.io/COVID19/
 
 tweet2 = (f'''Here is the latest COVID-19 from Cambridge, MA Educational Institutions
 Cambridge Public Schools:
