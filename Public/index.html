@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="styles.css">
+    
+    <title>CambridgeCovid Bot</title>
+  </head>
+  <body>
+    <a name="home"></a>
+    <!-- navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+      <div class="container-fluid container">
+        <a class="navbar-brand" href="#home">Cambridge Covid</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <!-- <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#home">Home</a>
+            </li> -->
+            <li class="nav-item">
+              <a class="nav-link" href="#about">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#howitworks">How It Works</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#tweets">Twitter Feed</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#sources">Sources</a>
+            </li>
+
+            <!-- <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Dropdown
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>
+              </ul>
+            </li> -->
+
+          </ul>
+          
+        </div>
+      </div>
+    </nav>
+
+    <!-- header -->
+    <header class="bg-dark text-light p-2">
+      <div class="header-content container">
+        <h2 class="fs-2">Cambridge Covid</h2>
+        <p class="justify-content-center fs-5">is a Twitter bot that reports COVID-19 data for the City of Cambridge, MA.</p>
+
+      </div>
+    </header>
+
+    <a name="about"></a>
+    <div class="about card">
+      <div class="card-body container row about-content d-flex justify-content-center">
+        <div class="col-lg-7">
+        <h3 class="card-title d-flex justify-content-center">About</h3>
+        <p class="d-flex flex-row-reverse">
+          Cambridge Covid is a Twitter bot built using Python and the Twitter API.
+          It uses the data provided to the public by the City of Cambridge, and the Cambridge Public School District on their respective websites, and formats it in a convienent and easily digestible way.
+          <p>Every evening, the bot Tweets to
+            <a href="https://twitter.com/cambridgecovid" target="blank_">@CambridgeCOVID</a>, with the most recent available data.</p>
+          </p>
+        
+        <a name="howitworks"></a>
+        <h3 class="d-flex justify-content-center">How It Works</h3>
+        <p>
+          The data is retrived using the Selenium (using chromedriver) Python library, and parsed with BeautifulSoup.
+          It is re-formatted, and then sent to Twitter using the Twitter API through Tweepy.
+        </p>
+        <p>You can check out our code on <a href="https://github.com/tektaxi/cambridge-covid" target="blank_">GitHub</a>, and become a contributer to help add new features in the future.</p>
+       
+        <a name="sources"></a>
+        <h3 class="d-flex justify-content-center">Sources</h3>
+        <p>Our python script uses <a href="https://cityofcambridge.shinyapps.io/COVID19/">https://cityofcambridge.shinyapps.io/COVID19/</a> 
+        to get data for the City of Cambridge as a whole, and for Universities within Cambridge.
+        Our script also uses <a href="https://www.cpsd.us/covid19data">https://www.cpsd.us/covid19data</a> to get data for the Cambridge Public Schools.
+        </p>
+
+      </div>
+        <div class="col-lg-5">
+          <img src="https://logos-world.net/wp-content/uploads/2020/04/Twitter-Logo.png" class="card-img-bottom" alt="...">
+          <a name="tweets"></a>
+          <a class="twitter-timeline" href="https://twitter.com/CambridgeCOVID?ref_src=twsrc%5Etfw">Tweets by CambridgeCOVID</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        </div>
+
+      </div>
+    </div>
+
+
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+  </body>
+</html>
