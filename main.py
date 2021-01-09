@@ -133,7 +133,7 @@ Positive Test Rate (last 14 days): {data_dict["Positive Tests*** Over the Last 1
 Cases per 100k (7 day average): {data_dict["Confirmed Cases per 100,000 residents** 7 Day Moving Average"]}
 ''')
 
-tweet2 = (f'''Here is the latest COVID-19 from Cambridge, MA Educational Institutions
+tweet2 = (f'''Here is the latest COVID-19 data from Cambridge, MA Educational Institutions
 Cambridge Public Schools:
 Total Confirmed Cases: {cpsd_data_dict["CPS_confirmed"]}
 Staff: {cpsd_data_dict["CPS_staff"]}
