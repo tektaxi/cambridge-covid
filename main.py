@@ -166,23 +166,24 @@ print(tweet2)
 # Authenticate to Twitter
 port = 587  # For starttls
 smtp_server = "smtp.dreamhost.com"
-email = "admin@cambridgecovid.tavienpollard.com"
+reciever_email = "notifications@cambridgecovid.tavienpollard.com"
+sender_email = "admin@cambridgecovid.tavienpollard.com"
 password = "corona2021**"
 message = """\
+From: admin@cambridgecovid.tavienpollard.com
 Subject: Tweepy Error
 
 There was an error with the tweet"""
 
-consumer_key = "a3RNDau7VG45wMnLtEivWXWdM"
-consumer_secret = "OERrrOtM6KMksRwwTgOJvWaTYGLTamsWOjKcOJUOlITXbZrxKs"
-access_token = "1346625215497953281-EiwJbwMmxnXoZzvMEBO0cnlstTbBib"
-access_secret = "vLb1ohjbpYGSVtqbVM97cRFSlvVKDTLmYp2cVyAJ6uTik"
+consumer_key = ""
+consumer_secret = ""
+access_token = ""
+access_secret = ""
 
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_secret)
 
 # Create API object
-"""
 api = tweepy.API(auth)
 try:
     api.verify_credentials()
@@ -200,6 +201,5 @@ except:
         server.ehlo()  # Can be omitted
         server.starttls(context=context)
         server.ehlo()  # Can be omitted
-        server.login(email, password)
-        server.sendmail(email, email, message)
-"""
+        server.login(sender_email, password)
+        server.sendmail(sender_email, reciever_email, message)
