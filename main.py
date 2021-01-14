@@ -141,7 +141,7 @@ Cases per 100k (7 day average): {data_dict["Confirmed Cases per 100,000 resident
 #CambMA
 ''')
 
-tweet2 = (f'''Here is the latest COVID-19 data from Cambridge, MA Educational Institutions
+tweet2 = (f'''Latest COVID-19 data from Cambridge, MA Educational Institutions
 Cambridge Public Schools:
 Total Confirmed Cases: {cpsd_data_dict["CPS_confirmed"]}
 Staff: {cpsd_data_dict["CPS_staff"]}
