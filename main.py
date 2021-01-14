@@ -157,10 +157,10 @@ print(tweet2)
 
 # API code from realpython.com
 # Authenticate to Twitter
-consumer_key = "a3RNDau7VG45wMnLtEivWXWdM"
-consumer_secret = "OERrrOtM6KMksRwwTgOJvWaTYGLTamsWOjKcOJUOlITXbZrxKs"
-access_token = "1346625215497953281-EiwJbwMmxnXoZzvMEBO0cnlstTbBib"
-access_secret = "vLb1ohjbpYGSVtqbVM97cRFSlvVKDTLmYp2cVyAJ6uTik"
+consumer_key = ""
+consumer_secret = ""
+access_token = ""
+access_secret = ""
 
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_secret)
