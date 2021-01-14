@@ -18,9 +18,8 @@ driver = webdriver.Chrome(options=chrome_options)
 # get html from site
 def getHtml(url, element, target_html):
     driver.get(url)
-    
-	target_working = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, target_html)))
-	
+    target_working = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, target_html)))
+
     if target_working is not None:
         if element is not None:
             driver.find_element_by_xpath(element).click()
@@ -29,7 +28,7 @@ def getHtml(url, element, target_html):
         soup_file = driver.page_source
         soup = BeautifulSoup(soup_file, features="lxml")
 
-    	return soup
+    return soup
 
 
 # parse html for data we need
@@ -37,7 +36,7 @@ def parseData(selection):
     if selection == "University":
         url = "https://cityofcambridge.shinyapps.io/COVID19/"
         element_xpath = ('//a[@href="#shiny-tab-university"]')
-		target_data = "metric_total"
+        target_data = "metric_total"
         soup = getHtml(url, element_xpath, target_data)
 
         raw_data = soup.findAll('div', class_="rt-td rt-align-left")
@@ -56,12 +55,13 @@ def parseData(selection):
 
         raw_text = []
         time_string = ""
+
     elif selection == "cpsd":
         url = "https://www.cpsd.us/covid19data"
         element_xpath = None
         target_data = "ctl00_ContentPlaceHolder1_ctl18_divContent"
         soup = getHtml(url, element_xpath, target_data)
-        
+
         data1 = soup.select("div#ctl00_ContentPlaceHolder1_ctl18_divContent strong")
         data2 = soup.select("div#ctl00_ContentPlaceHolder1_ctl25_divContent strong span")
         data3 = soup.select("div#ctl00_ContentPlaceHolder1_ctl29_divContent strong")
@@ -100,7 +100,7 @@ def parseData(selection):
         data_dict = dict(zip(parsed_text, parsed_data))
 
     return time_string, data_dict
-    # print(data_dict)
+# print(data_dict)
 
 
 # main code
@@ -120,7 +120,6 @@ cpsd_data_dict = cpsd_data[1]
 # print(data_dict)
 # print(uni_data_dict)
 # print(cpsd_data_dict)
-
 
 
 # Create a tweet
@@ -164,6 +163,7 @@ print(tweet2)
 
 # API code from realpython.com
 # Authenticate to Twitter
+"""
 consumer_key = "a3RNDau7VG45wMnLtEivWXWdM"
 consumer_secret = "OERrrOtM6KMksRwwTgOJvWaTYGLTamsWOjKcOJUOlITXbZrxKs"
 access_token = "1346625215497953281-EiwJbwMmxnXoZzvMEBO0cnlstTbBib"
@@ -183,3 +183,4 @@ except:
 # send tweet
 api.update_status(tweet1)
 api.update_status(tweet2)
+"""
