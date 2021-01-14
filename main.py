@@ -5,6 +5,9 @@ from selenium.webdriver.chrome.options import Options
 import tweepy
 import lxml
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.common.by import By
+
 chrome_options = Options()
 chrome_options.add_argument('--no-sandbox')
 chrome_options.add_argument('--disable-dev-shm-usage')
@@ -13,19 +16,22 @@ driver = webdriver.Chrome(options=chrome_options)
 
 
 # get html from site
-def getHtml(url, element):
+def getHtml(url, element, target_html):
     driver.get(url)
     # # make some version of the below work so it works dynamically instead of hard coded sleep
-    # element = WebDriverWait(browser, 10).until(
-    #     EC.presence_of_element_located((ID, "chart"))
-    # )
-    time.sleep(2)
-    if element != None:
-        driver.find_element_by_xpath(element).click()
+    target_working = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, target_html)))
+    print(target_working)
+
+    if target_working is not None:
+        if element is not None:
+            print("found")
+            driver.find_element_by_xpath(element).click()
+            time.sleep(2)
         time.sleep(2)
-    soup_file = driver.page_source
-    soup = BeautifulSoup(soup_file, features="lxml")
-    return soup
+        soup_file = driver.page_source
+        soup = BeautifulSoup(soup_file, features="lxml")
+
+        return soup
 
 
 # parse html for data we need
@@ -33,7 +39,8 @@ def parseData(selection):
     if selection == "University":
         url = "https://cityofcambridge.shinyapps.io/COVID19/"
         element_xpath = ('//a[@href="#shiny-tab-university"]')
-        soup = getHtml(url, element_xpath)
+        target_data = "metric_total"
+        soup = getHtml(url, element_xpath, target_data)
 
         raw_data = soup.findAll('div', class_="rt-td rt-align-left")
 
@@ -54,8 +61,9 @@ def parseData(selection):
     elif selection == "cpsd":
         url = "https://www.cpsd.us/covid19data"
         element_xpath = None
-        soup = getHtml(url, element_xpath)
-        
+        target_data = "ctl00_ContentPlaceHolder1_ctl18_divContent"
+        soup = getHtml(url, element_xpath, target_data)
+
         data1 = soup.select("div#ctl00_ContentPlaceHolder1_ctl18_divContent strong")
         data2 = soup.select("div#ctl00_ContentPlaceHolder1_ctl25_divContent strong span")
         data3 = soup.select("div#ctl00_ContentPlaceHolder1_ctl29_divContent strong")
@@ -74,9 +82,10 @@ def parseData(selection):
     else:
         url = "https://cityofcambridge.shinyapps.io/COVID19/"
         element_xpath = None
-        
-        soup = getHtml(url, element_xpath)
+        target_data = "metric_total"
 
+        soup = getHtml(url, element_xpath, target_data)
+        print(soup)
         raw_timestamp = soup.find('div', id='text_timestamp')
         time_string = f"{raw_timestamp.get_text()}"
 
@@ -115,13 +124,14 @@ cpsd_data_dict = cpsd_data[1]
 # print(cpsd_data_dict)
 
 
-
 # Create a tweet
-print()
+print(uni_data_dict)
+print(data_dict)
+print(cpsd_data_dict)
 print("Here is the tweet being sent")
 print()
 
-tweet1 = (f'''Latest COVID-19 data from Cambridge, MA.
+tweet1 = (f'''Here is the latest COVID-19 data from Cambridge, MA.
 {date_updated}
 New Cases Today: {data_dict["Newly Reported Cases Today*"]}
 Today's Deaths: {data_dict["Newly Reported Deaths Today*"]}
@@ -131,9 +141,8 @@ Active Cases: {data_dict["Active Cases"]}
 Total Recoveries: {data_dict["Total Recoveries"]}
 Positive Test Rate (last 14 days): {data_dict["Positive Tests*** Over the Last 14 Days"]}
 Cases per 100k (7 day average): {data_dict["Confirmed Cases per 100,000 residents** 7 Day Moving Average"]}
-#CambMA
 ''')
-
+print(tweet1)
 tweet2 = (f'''Here is the latest COVID-19 data from Cambridge, MA Educational Institutions
 Cambridge Public Schools:
 Total Confirmed Cases: {cpsd_data_dict["CPS_confirmed"]}
@@ -144,7 +153,6 @@ Confirmed In-School Transmission: {cpsd_data_dict["in-school-transmission"]}
 Harvard University Total Cases: {uni_data_dict["Harvard University*"]}
 Lesley University Total Cases: {uni_data_dict["Lesley University"]}
 MIT Total Cases: {uni_data_dict["Massachusetts Institute of Technology (MIT)*"]}
-#CambMA
 ''')
 
 print("tweet 1")
@@ -155,24 +163,24 @@ print("tweet 2")
 print()
 print(tweet2)
 
-# API code from realpython.com
-# Authenticate to Twitter
-consumer_key = "a3RNDau7VG45wMnLtEivWXWdM"
-consumer_secret = "OERrrOtM6KMksRwwTgOJvWaTYGLTamsWOjKcOJUOlITXbZrxKs"
-access_token = "1346625215497953281-EiwJbwMmxnXoZzvMEBO0cnlstTbBib"
-access_secret = "vLb1ohjbpYGSVtqbVM97cRFSlvVKDTLmYp2cVyAJ6uTik"
+# # API code from realpython.com
+# # Authenticate to Twitter
+# consumer_key = ""
+# consumer_secret = ""
+# access_token = ""
+# access_secret = ""
 
-auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-auth.set_access_token(access_token, access_secret)
+# auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+# auth.set_access_token(access_token, access_secret)
 
-# Create API object
-api = tweepy.API(auth)
-try:
-    api.verify_credentials()
-    print("Authentication OK")
-except:
-    print("Error during authentication")
+# # Create API object
+# api = tweepy.API(auth)
+# try:
+#     api.verify_credentials()
+#     print("Authentication OK")
+# except:
+#     print("Error during authentication")
 
-# send tweet
-api.update_status(tweet1)
-api.update_status(tweet2)
+# # send tweet
+# api.update_status(tweet1)
+# api.update_status(tweet2)
