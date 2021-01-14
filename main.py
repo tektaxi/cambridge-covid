@@ -131,6 +131,7 @@ Active Cases: {data_dict["Active Cases"]}
 Total Recoveries: {data_dict["Total Recoveries"]}
 Positive Test Rate (last 14 days): {data_dict["Positive Tests*** Over the Last 14 Days"]}
 Cases per 100k (7 day average): {data_dict["Confirmed Cases per 100,000 residents** 7 Day Moving Average"]}
+#CambMA
 ''')
 
 tweet2 = (f'''Here is the latest COVID-19 data from Cambridge, MA Educational Institutions
@@ -143,6 +144,7 @@ Confirmed In-School Transmission: {cpsd_data_dict["in-school-transmission"]}
 Harvard University Total Cases: {uni_data_dict["Harvard University*"]}
 Lesley University Total Cases: {uni_data_dict["Lesley University"]}
 MIT Total Cases: {uni_data_dict["Massachusetts Institute of Technology (MIT)*"]}
+#CambMA
 ''')
 
 print("tweet 1")
