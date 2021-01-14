@@ -16,7 +16,7 @@ chrome_options.add_argument('--headless')
 driver = webdriver.Chrome(options=chrome_options)
 
 
-# get html from site
+# get html from site k
 def getHtml(url, element, target_html):
     driver.get(url)
     target_working = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, target_html)))
