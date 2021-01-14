@@ -121,7 +121,7 @@ print()
 print("Here is the tweet being sent")
 print()
 
-tweet1 = (f'''Here is the latest COVID-19 data from Cambridge, MA.
+tweet1 = (f'''Latest COVID-19 data from Cambridge, MA.
 {date_updated}
 New Cases Today: {data_dict["Newly Reported Cases Today*"]}
 Today's Deaths: {data_dict["Newly Reported Deaths Today*"]}
@@ -153,24 +153,24 @@ print("tweet 2")
 print()
 print(tweet2)
 
-# # API code from realpython.com
-# # Authenticate to Twitter
-# consumer_key = ""
-# consumer_secret = ""
-# access_token = ""
-# access_secret = ""
+# API code from realpython.com
+# Authenticate to Twitter
+consumer_key = "a3RNDau7VG45wMnLtEivWXWdM"
+consumer_secret = "OERrrOtM6KMksRwwTgOJvWaTYGLTamsWOjKcOJUOlITXbZrxKs"
+access_token = "1346625215497953281-EiwJbwMmxnXoZzvMEBO0cnlstTbBib"
+access_secret = "vLb1ohjbpYGSVtqbVM97cRFSlvVKDTLmYp2cVyAJ6uTik"
 
-# auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-# auth.set_access_token(access_token, access_secret)
+auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+auth.set_access_token(access_token, access_secret)
 
-# # Create API object
-# api = tweepy.API(auth)
-# try:
-#     api.verify_credentials()
-#     print("Authentication OK")
-# except:
-#     print("Error during authentication")
+# Create API object
+api = tweepy.API(auth)
+try:
+    api.verify_credentials()
+    print("Authentication OK")
+except:
+    print("Error during authentication")
 
-# # send tweet
-# api.update_status(tweet1)
-# api.update_status(tweet2)
+# send tweet
+api.update_status(tweet1)
+api.update_status(tweet2)
