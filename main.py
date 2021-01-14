@@ -23,7 +23,6 @@ def getHtml(url, element, target_html):
 	
     if target_working is not None:
         if element is not None:
-        	print("found")
             driver.find_element_by_xpath(element).click()
             time.sleep(2)
         time.sleep(2)
