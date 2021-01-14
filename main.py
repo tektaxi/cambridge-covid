@@ -7,6 +7,7 @@ import lxml
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.by import By
+import smtplib, ssl
 
 chrome_options = Options()
 chrome_options.add_argument('--no-sandbox')
@@ -163,7 +164,15 @@ print(tweet2)
 
 # API code from realpython.com
 # Authenticate to Twitter
-"""
+port = 587  # For starttls
+smtp_server = "smtp.dreamhost.com"
+email = "admin@cambridgecovid.tavienpollard.com"
+password = "corona2021**"
+message = """\
+Subject: Tweepy Error
+
+There was an error with the tweet"""
+
 consumer_key = "a3RNDau7VG45wMnLtEivWXWdM"
 consumer_secret = "OERrrOtM6KMksRwwTgOJvWaTYGLTamsWOjKcOJUOlITXbZrxKs"
 access_token = "1346625215497953281-EiwJbwMmxnXoZzvMEBO0cnlstTbBib"
@@ -173,6 +182,7 @@ auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_secret)
 
 # Create API object
+"""
 api = tweepy.API(auth)
 try:
     api.verify_credentials()
@@ -181,6 +191,15 @@ except:
     print("Error during authentication")
 
 # send tweet
-api.update_status(tweet1)
-api.update_status(tweet2)
+try:
+    api.update_status(tweet1)
+    api.update_status(tweet2)
+except:
+    context = ssl.create_default_context()
+    with smtplib.SMTP(smtp_server, port) as server:
+        server.ehlo()  # Can be omitted
+        server.starttls(context=context)
+        server.ehlo()  # Can be omitted
+        server.login(email, password)
+        server.sendmail(email, email, message)
 """
