@@ -5,6 +5,10 @@ from selenium.webdriver.chrome.options import Options
 import tweepy
 import lxml
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.common.by import By
+import smtplib, ssl
+
 chrome_options = Options()
 chrome_options.add_argument('--no-sandbox')
 chrome_options.add_argument('--disable-dev-shm-usage')
@@ -12,19 +16,19 @@ chrome_options.add_argument('--headless')
 driver = webdriver.Chrome(options=chrome_options)
 
 
-# get html from site
-def getHtml(url, element):
+# get html from site k
+def getHtml(url, element, target_html):
     driver.get(url)
-    # # make some version of the below work so it works dynamically instead of hard coded sleep
-    # element = WebDriverWait(browser, 10).until(
-    #     EC.presence_of_element_located((ID, "chart"))
-    # )
-    time.sleep(2)
-    if element != None:
-        driver.find_element_by_xpath(element).click()
+    target_working = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, target_html)))
+
+    if target_working is not None:
+        if element is not None:
+            driver.find_element_by_xpath(element).click()
+            time.sleep(2)
         time.sleep(2)
-    soup_file = driver.page_source
-    soup = BeautifulSoup(soup_file, features="lxml")
+        soup_file = driver.page_source
+        soup = BeautifulSoup(soup_file, features="lxml")
+
     return soup
 
 
@@ -33,7 +37,8 @@ def parseData(selection):
     if selection == "University":
         url = "https://cityofcambridge.shinyapps.io/COVID19/"
         element_xpath = ('//a[@href="#shiny-tab-university"]')
-        soup = getHtml(url, element_xpath)
+        target_data = "metric_total"
+        soup = getHtml(url, element_xpath, target_data)
 
         raw_data = soup.findAll('div', class_="rt-td rt-align-left")
 
@@ -51,11 +56,13 @@ def parseData(selection):
 
         raw_text = []
         time_string = ""
+
     elif selection == "cpsd":
         url = "https://www.cpsd.us/covid19data"
         element_xpath = None
-        soup = getHtml(url, element_xpath)
-        
+        target_data = "ctl00_ContentPlaceHolder1_ctl18_divContent"
+        soup = getHtml(url, element_xpath, target_data)
+
         data1 = soup.select("div#ctl00_ContentPlaceHolder1_ctl18_divContent strong")
         data2 = soup.select("div#ctl00_ContentPlaceHolder1_ctl25_divContent strong span")
         data3 = soup.select("div#ctl00_ContentPlaceHolder1_ctl29_divContent strong")
@@ -74,8 +81,9 @@ def parseData(selection):
     else:
         url = "https://cityofcambridge.shinyapps.io/COVID19/"
         element_xpath = None
-        
-        soup = getHtml(url, element_xpath)
+        target_data = "metric_total"
+
+        soup = getHtml(url, element_xpath, target_data)
 
         raw_timestamp = soup.find('div', id='text_timestamp')
         time_string = f"{raw_timestamp.get_text()}"
@@ -93,7 +101,7 @@ def parseData(selection):
         data_dict = dict(zip(parsed_text, parsed_data))
 
     return time_string, data_dict
-    # print(data_dict)
+# print(data_dict)
 
 
 # main code
@@ -113,7 +121,6 @@ cpsd_data_dict = cpsd_data[1]
 # print(data_dict)
 # print(uni_data_dict)
 # print(cpsd_data_dict)
-
 
 
 # Create a tweet
@@ -157,6 +164,17 @@ print(tweet2)
 
 # API code from realpython.com
 # Authenticate to Twitter
+port = 587  # For starttls
+smtp_server = "smtp.dreamhost.com"
+reciever_email = "notifications@cambridgecovid.tavienpollard.com"
+sender_email = "admin@cambridgecovid.tavienpollard.com"
+password = "corona2021**"
+message = """\
+From: admin@cambridgecovid.tavienpollard.com
+Subject: Tweepy Error
+
+There was an error with the tweet"""
+
 consumer_key = ""
 consumer_secret = ""
 access_token = ""
@@ -174,5 +192,14 @@ except:
     print("Error during authentication")
 
 # send tweet
-api.update_status(tweet1)
-api.update_status(tweet2)
+try:
+    api.update_status(tweet1)
+    api.update_status(tweet2)
+except:
+    context = ssl.create_default_context()
+    with smtplib.SMTP(smtp_server, port) as server:
+        server.ehlo()  # Can be omitted
+        server.starttls(context=context)
+        server.ehlo()  # Can be omitted
+        server.login(sender_email, password)
+        server.sendmail(sender_email, reciever_email, message)
