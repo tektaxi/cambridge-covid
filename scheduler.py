@@ -60,7 +60,7 @@ def parseData(selection):
     elif selection == "cpsd":
         url = "https://www.cpsd.us/covid19data"
         element_xpath = None
-        target_data = "ctl00_ContentPlaceHolder1_ctl18_divContent"
+        target_data = "ctl00_ContentPlaceHolder1_ctl14_divTabs_0"
         soup = getHtml(url, element_xpath, target_data)
 
         cps_data = soup.select("div#ctl00_ContentPlaceHolder1_ctl14_divTabs_0 strong")
@@ -182,10 +182,10 @@ Subject: Tweepy Error
 There was an error with the tweet
 Error: {error_message}"""
 
-consumer_key = ""
-consumer_secret = ""
-access_token = ""
-access_secret = ""
+consumer_key = "3UE3MdUevLiUnIV9TFQfP3cJF"
+consumer_secret = "pVJ2xa86GszyXWrIcS9C7UUI8nmKCAxqlbJWuLjlPKl6piWXgW"
+access_token = "1349818284087140355-80GsNI2YOBCWzgqUMQg2q7Gc8Am3Hc"
+access_secret = "HvNZp1cLDqKsj63LcWLFw8adx6TGPn494J0UB9YBbOpHX"
 
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_secret)
