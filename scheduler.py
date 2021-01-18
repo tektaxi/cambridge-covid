@@ -60,7 +60,7 @@ def parseData(selection):
     elif selection == "cpsd":
         url = "https://www.cpsd.us/covid19data"
         element_xpath = None
-        target_data = "ctl00_ContentPlaceHolder1_ctl18_divContent"
+        target_data = "ctl00_ContentPlaceHolder1_ctl14_divTabs_0"
         soup = getHtml(url, element_xpath, target_data)
 
         cps_data = soup.select("div#ctl00_ContentPlaceHolder1_ctl14_divTabs_0 strong")
