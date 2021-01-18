@@ -63,19 +63,24 @@ def parseData(selection):
         target_data = "ctl00_ContentPlaceHolder1_ctl18_divContent"
         soup = getHtml(url, element_xpath, target_data)
 
-        data1 = soup.select("div#ctl00_ContentPlaceHolder1_ctl18_divContent strong")
-        data2 = soup.select("div#ctl00_ContentPlaceHolder1_ctl25_divContent strong span")
-        data3 = soup.select("div#ctl00_ContentPlaceHolder1_ctl29_divContent strong")
-        raw_data = data1 + data2 + data3
+        cps_data = soup.select("div#ctl00_ContentPlaceHolder1_ctl14_divTabs_0 strong")
+        #These numbers are the static data from before winter break
+        existing = [50, 6, 36, 5, 16, 0, 4]
+        existing_num = 0
+        print(cps_data)
 
         parsed_data = []
-        parsed_text = ["CPS_confirmed", "in-school-transmission", "CPS_staff", "CPS_students"]
-        for item in raw_data:
-            data = item.get_text()
-            if data.isdigit():
+        parsed_text = ["CPS_confirmed", "in-school-transmission", "CPS_staff", "CPS_staff_onsite_testing",
+                       "CPS_students", "CPS_students_onsite_testing", "CPS_athletes"]
+        for item in cps_data:
+            raw_data = item.get_text()
+            if raw_data.isdigit():
+                data = int(raw_data) + existing[existing_num]
                 parsed_data.append(data)
+                existing_num += 1
 
         data_dict = dict(zip(parsed_text, parsed_data))
+        print(data_dict)
 
         time_string = ""
     else:
@@ -164,6 +169,7 @@ print(tweet2)
 
 # API code from realpython.com
 # Authenticate to Twitter
+error_message = ""
 port = 587  # For starttls
 smtp_server = "smtp.dreamhost.com"
 reciever_email = "notifications@cambridgecovid.tavienpollard.com"
@@ -173,7 +179,8 @@ message = """\
 From: admin@cambridgecovid.tavienpollard.com
 Subject: Tweepy Error
 
-There was an error with the tweet"""
+There was an error with the tweet
+Error: {error_message}"""
 
 consumer_key = ""
 consumer_secret = ""
@@ -195,7 +202,8 @@ except:
 try:
     api.update_status(tweet1)
     api.update_status(tweet2)
-except:
+except Exception as err:
+    error_message = err
     context = ssl.create_default_context()
     with smtplib.SMTP(smtp_server, port) as server:
         server.ehlo()  # Can be omitted
