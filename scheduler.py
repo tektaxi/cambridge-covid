@@ -174,7 +174,7 @@ port = 587  # For starttls
 smtp_server = "smtp.dreamhost.com"
 reciever_email = "notifications@cambridgecovid.tavienpollard.com"
 sender_email = "admin@cambridgecovid.tavienpollard.com"
-password = "corona2021**"
+password = ""
 message = """\
 From: admin@cambridgecovid.tavienpollard.com
 Subject: Tweepy Error
@@ -182,10 +182,10 @@ Subject: Tweepy Error
 There was an error with the tweet
 Error: {error_message}"""
 
-consumer_key = "3UE3MdUevLiUnIV9TFQfP3cJF"
-consumer_secret = "pVJ2xa86GszyXWrIcS9C7UUI8nmKCAxqlbJWuLjlPKl6piWXgW"
-access_token = "1349818284087140355-80GsNI2YOBCWzgqUMQg2q7Gc8Am3Hc"
-access_secret = "HvNZp1cLDqKsj63LcWLFw8adx6TGPn494J0UB9YBbOpHX"
+consumer_key = ""
+consumer_secret = ""
+access_token = ""
+access_secret = ""
 
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_secret)
