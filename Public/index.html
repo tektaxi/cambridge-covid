@@ -1,6 +1,17 @@
 <!doctype html>
 <html lang="en">
   <head>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DYMSGYZJRQ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-DYMSGYZJRQ');
+    </script>
+
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -30,6 +41,9 @@
               <a class="nav-link" href="#about">About</a>
             </li>
             <li class="nav-item">
+              <a class="nav-link" href="#contact">Contact</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="#howitworks">How It Works</a>
             </li>
             <li class="nav-item">
@@ -37,6 +51,9 @@
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#sources">Sources</a>
+            </li>
+            <li class="nav-item mt-2">
+              <a href="https://twitter.com/cambridgecovid?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">Follow @cambridgecovid</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
             </li>
 
             <!-- <li class="nav-item dropdown">
@@ -74,7 +91,7 @@
         <p class="d-flex flex-row-reverse">
           Cambridge Covid is a Twitter bot built using Python and the Twitter API.
           It uses the data provided to the public by the City of Cambridge, and the Cambridge Public School District on their respective websites, and formats it in a convienent and easily digestible way.
-          It was created by Tavien Pollard (@TaviPollard) for a school project in his Computer Science class at Cambridge Rindge and Latin School.
+          It was originally created by Tavien Pollard (@TaviPollard) for a school project in his Computer Science class at Cambridge Rindge and Latin School, and is maintained by Tavien Pollard, Toby Mallon, and GitHub contributers.
           <p>Every evening, the bot Tweets to
             <a href="https://twitter.com/cambridgecovid" target="blank_">@CambridgeCOVID</a>, with the most recent available data.</p>
           </p>
@@ -89,19 +106,31 @@
        
         <a name="sources"></a>
         <h3 class="d-flex justify-content-center">Sources</h3>
-        <p>Our python script uses <a href="https://cityofcambridge.shinyapps.io/COVID19/">https://cityofcambridge.shinyapps.io/COVID19/</a> 
+        <p>Our python script uses <a href="https://cityofcambridge.shinyapps.io/COVID19/" target="blank_">https://cityofcambridge.shinyapps.io/COVID19/</a> 
         to get data for the City of Cambridge as a whole, and for Universities within Cambridge.
-        Our script also uses <a href="https://www.cpsd.us/covid19data">https://www.cpsd.us/covid19data</a> to get data for the Cambridge Public Schools.
+        Our script also uses <a href="https://www.cpsd.us/covid19data" target="blank_">https://www.cpsd.us/covid19data</a> to get data for the Cambridge Public Schools.
+        </p>
+
+        <!-- <div class="contact bg-light mt-2">
+          <a name="contact"></a>
+          <h3 class="d-flex justify-content-center">Contact</h3>
+          </p>
+          </div>
+        </div> -->
+        <a name="contact"></a>
+        <h3 class="d-flex justify-content-center">Contact</h3>
+        <p>You can contact us about bugs and/or suggestions by making an issue on <a href="https://github.com/tektaxi/cambridge-covid" target="blank_">GitHub</a> or by emailing us at <a href="mailto:admin@cambridgecovid.tavienpollard.com">admin@cambridgecovid.tavienpollard.com</a>.
         </p>
 
       </div>
         <div class="col-lg-5">
           <a name="tweets"></a>
-          <a class="twitter-timeline" href="https://twitter.com/CambridgeCOVID?ref_src=twsrc%5Etfw">Tweets by CambridgeCOVID</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-        </div>
+          <a class="twitter-timeline" data-height="850" href="https://twitter.com/CambridgeCOVID?ref_src=twsrc%5Etfw">Tweets by CambridgeCOVID</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></div>
 
       </div>
     </div>
+
+    
 
 
 

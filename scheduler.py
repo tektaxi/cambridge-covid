@@ -64,10 +64,9 @@ def parseData(selection):
         soup = getHtml(url, element_xpath, target_data)
 
         cps_data = soup.select("div#ctl00_ContentPlaceHolder1_ctl14_divTabs_0 strong")
-        #These numbers are the static data from before winter break
+        # These numbers are the static data from before winter break
         existing = [50, 6, 36, 5, 16, 0, 4]
         existing_num = 0
-        print(cps_data)
 
         parsed_data = []
         parsed_text = ["CPS_confirmed", "in-school-transmission", "CPS_staff", "CPS_staff_onsite_testing",
@@ -146,11 +145,12 @@ Cases per 100k (7 day average): {data_dict["Confirmed Cases per 100,000 resident
 #CambMA
 ''')
 
-tweet2 = (f'''Latest COVID-19 data from Cambridge, MA Educational Institutions
+tweet2 = (f'''Latest COVID-19 data from Cambridge, MA Schools
 Cambridge Public Schools:
 Total Confirmed Cases: {cpsd_data_dict["CPS_confirmed"]}
 Staff: {cpsd_data_dict["CPS_staff"]}
 Students: {cpsd_data_dict["CPS_students"]}
+Student Athletes: {cpsd_data_dict["CPS_athletes"]}
 Confirmed In-School Transmission: {cpsd_data_dict["in-school-transmission"]}
 
 Harvard University Total Cases: {uni_data_dict["Harvard University*"]}
@@ -164,6 +164,7 @@ print()
 print(tweet1)
 print()
 print("tweet 2")
+print(f"tweet 2 length: {len(tweet2)}")
 print()
 print(tweet2)
 
@@ -174,7 +175,15 @@ port = 587  # For starttls
 smtp_server = "smtp.dreamhost.com"
 reciever_email = "notifications@cambridgecovid.tavienpollard.com"
 sender_email = "admin@cambridgecovid.tavienpollard.com"
-password = "corona2021**"
+
+password = ""
+message = """\
+From: admin@cambridgecovid.tavienpollard.com
+Subject: Tweepy Error
+
+There was an error with the tweet
+Error: {error_message}"""
+
 
 consumer_key = ""
 consumer_secret = ""
@@ -194,8 +203,8 @@ except:
 
 # send tweet
 try:
-    api.update_status(tweet1)
     api.update_status(tweet2)
+    api.update_status(tweet1)
 except Exception as err:
     error_message = err
 
