@@ -170,11 +170,12 @@ print(tweet2)
 
 # API code from realpython.com
 # Authenticate to Twitter
-error_message = ""
+error_message = None
 port = 587  # For starttls
 smtp_server = "smtp.dreamhost.com"
 reciever_email = "notifications@cambridgecovid.tavienpollard.com"
 sender_email = "admin@cambridgecovid.tavienpollard.com"
+
 password = ""
 message = """\
 From: admin@cambridgecovid.tavienpollard.com
@@ -182,6 +183,7 @@ Subject: Tweepy Error
 
 There was an error with the tweet
 Error: {error_message}"""
+
 
 consumer_key = ""
 consumer_secret = ""
@@ -205,10 +207,22 @@ try:
     api.update_status(tweet1)
 except Exception as err:
     error_message = err
-    context = ssl.create_default_context()
+
+
+message = f"""\
+From: admin@cambridgecovid.tavienpollard.com
+Subject: Tweepy Error 
+
+There was an error with the tweet, {str(error_message)}
+
+"""
+print(message)
+context = ssl.create_default_context()
+if error_message is not None:
     with smtplib.SMTP(smtp_server, port) as server:
         server.ehlo()  # Can be omitted
         server.starttls(context=context)
         server.ehlo()  # Can be omitted
         server.login(sender_email, password)
         server.sendmail(sender_email, reciever_email, message)
+        print("sent")
