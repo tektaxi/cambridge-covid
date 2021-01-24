@@ -201,8 +201,8 @@ except:
 
 # send tweet
 try:
-    api.update_status(tweet1)
     api.update_status(tweet2)
+    api.update_status(tweet1)
 except Exception as err:
     error_message = err
     context = ssl.create_default_context()
