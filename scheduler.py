@@ -3,10 +3,10 @@ import time
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 import tweepy
-import lxml
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.by import By
+import lxml
 import smtplib, ssl
 
 chrome_options = Options()
@@ -23,7 +23,7 @@ def getHtml(url, element, target_html):
 
     if target_working is not None:
         if element is not None:
-            driver.find_element_by_xpath(element).click()
+            driver.find_element(By.XPATH, element).click()
             time.sleep(2)
         time.sleep(2)
         soup_file = driver.page_source
@@ -103,6 +103,7 @@ def parseData(selection):
         for jtem in raw_text:
             parsed_text.append(jtem.get_text())
         data_dict = dict(zip(parsed_text, parsed_data))
+        print(data_dict)
 
     return time_string, data_dict
 # print(data_dict)
@@ -112,7 +113,7 @@ def parseData(selection):
 print('loading')
 data = parseData("main-stats")
 university_data = parseData("University")
-cpsd_data = parseData("cpsd")
+#cpsd_data = parseData("cpsd")
 
 # quit after all data has been called
 driver.quit()
@@ -120,7 +121,7 @@ driver.quit()
 data_dict = data[1]
 date_updated = data[0]
 uni_data_dict = university_data[1]
-cpsd_data_dict = cpsd_data[1]
+#cpsd_data_dict = cpsd_data[1]
 # print(date_updated)
 # print(data_dict)
 # print(uni_data_dict)
@@ -138,23 +139,18 @@ New Cases Today: {data_dict["Newly Reported Cases Today*"]}
 Today's Deaths: {data_dict["Newly Reported Deaths Today*"]}
 Total Cases: {data_dict["Cumulative Cases"]}
 Total Deaths: {data_dict["Total Deaths"]}
-Active Cases: {data_dict["Active Cases"]}
-Total Recoveries: {data_dict["Total Recoveries"]}
 Positive Test Rate (last 14 days): {data_dict["Positive Tests*** Over the Last 14 Days"]}
 Cases per 100k (7 day average): {data_dict["Confirmed Cases per 100,000 residents** 7 Day Moving Average"]}
 #CambMA
 ''')
 
-tweet2 = (f'''Latest COVID-19 data from Cambridge, MA Schools
-Cambridge Public Schools:
-Total Confirmed Cases: {cpsd_data_dict["CPS_confirmed"]}
-Staff: {cpsd_data_dict["CPS_staff"]}
-Students: {cpsd_data_dict["CPS_students"]}
-Student Athletes: {cpsd_data_dict["CPS_athletes"]}
-Confirmed In-School Transmission: {cpsd_data_dict["in-school-transmission"]}
+'''#Staff: {cpsd_data_dict["CPS_staff"]}
+#Students: {cpsd_data_dict["CPS_students"]}
+#Student Athletes: {cpsd_data_dict["CPS_athletes"]}
+#Confirmed In-School Transmission: {cpsd_data_dict["in-school-transmission"]}}'''
 
+tweet2 = (f'''Latest COVID-19 data from Cambridge, MA Schools
 Harvard University Total Cases: {uni_data_dict["Harvard University*"]}
-Lesley University Total Cases: {uni_data_dict["Lesley University"]}
 MIT Total Cases: {uni_data_dict["Massachusetts Institute of Technology (MIT)*"]}
 #CambMA
 ''')
@@ -180,7 +176,6 @@ password = ""
 message = """\
 From: admin@cambridgecovid.tavienpollard.com
 Subject: Tweepy Error
-
 There was an error with the tweet
 Error: {error_message}"""
 
@@ -203,7 +198,6 @@ except:
 
 # send tweet
 try:
-    api.update_status(tweet2)
     api.update_status(tweet1)
 except Exception as err:
     error_message = err
@@ -212,9 +206,7 @@ except Exception as err:
 message = f"""\
 From: admin@cambridgecovid.tavienpollard.com
 Subject: Tweepy Error 
-
 There was an error with the tweet, {str(error_message)}
-
 """
 print(message)
 context = ssl.create_default_context()
