@@ -149,9 +149,10 @@ Cases per 100k (7 day average): {data_dict["Confirmed Cases per 100,000 resident
 #Student Athletes: {cpsd_data_dict["CPS_athletes"]}
 #Confirmed In-School Transmission: {cpsd_data_dict["in-school-transmission"]}}'''
 
-tweet2 = (f'''Latest COVID-19 data from Cambridge, MA Schools
-Harvard University Total Cases: {uni_data_dict["Harvard University*"]}
-MIT Total Cases: {uni_data_dict["Massachusetts Institute of Technology (MIT)*"]}
+tweet2 = (f'''Latest COVID-19 vaccination data from Cambridge, MA 
+Fully Vaccinated Cambridge Residents: {data_dict['Fully Vaccinated Cambridge Residents****']}
+Residents With One Vaccine Doses: {data_dict["Residents with One+ Vaccine Doses****"]}
+Residents With Booster: {data_dict["Residents with Booster****"]}
 #CambMA
 ''')
 
