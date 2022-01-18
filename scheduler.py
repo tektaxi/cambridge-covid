@@ -15,6 +15,13 @@ chrome_options.add_argument('--disable-dev-shm-usage')
 chrome_options.add_argument('--headless')
 driver = webdriver.Chrome(options=chrome_options)
 
+# api variables
+consumer_key = ""
+consumer_secret = ""
+access_token = ""
+access_secret = ""
+
+
 
 # get html from site k
 def getHtml(url, element, target_html):
@@ -181,10 +188,6 @@ There was an error with the tweet
 Error: {error_message}"""
 
 
-consumer_key = ""
-consumer_secret = ""
-access_token = ""
-access_secret = ""
 
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_secret)
@@ -219,3 +222,4 @@ if error_message is not None:
         server.login(sender_email, password)
         server.sendmail(sender_email, reciever_email, message)
         print("sent")
+        
